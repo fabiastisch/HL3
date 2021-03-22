@@ -1,13 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour {
+    public GameObject[] frameworks;
+
+    private int frameworkIndex = 0;
+    private GameObject framework;
+    public LayerMask builingLayer;
+    private bool buildingMode = false;
+    public Material transparent;
+
     /**
      * Reference to a Box.
      */
     public GameObject boxPrefab;
-    
+
     /**
      * Reference to the Hand.
      */
@@ -47,10 +57,67 @@ public class Player : MonoBehaviour {
      * Used to store the GameObject that this player is currently holding.
      */
     private GameObject objInHand;
-    
-    
+
+
     // Update is called once per frame
     void Update() {
+        if (Input.GetKeyDown(KeyCode.Z)) {
+            buildingMode = !buildingMode;
+        }
+
+        if (buildingMode) {
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            if (scroll > 0f) {
+                // scroll up
+                frameworkIndex = frameworkIndex - 1 >= 0 ? frameworkIndex - 1 :
+                    this.frameworks.Length > 0 ? this.frameworks.Length - 1 : 0;
+            }
+            else if (scroll < 0f) {
+                // scroll down
+                frameworkIndex = frameworkIndex + 1 < this.frameworks.Length ? frameworkIndex + 1 : 0;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Mouse0)) {
+                framework = null;
+            }
+            if (framework) {
+                Destroy(framework);
+                // TODO: not working fine
+                framework.layer = LayerMask.NameToLayer("Building");
+                framework = null;
+            }
+
+            Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+            Debug.DrawRay(ray.origin, ray.GetPoint(maxDist));
+            RaycastHit raycastHit;
+            if (Physics.Raycast(ray, out raycastHit, maxDist, builingLayer)) {
+                Vector3 hitPoint = raycastHit.point;
+                hitPoint.x = Mathf.Round(hitPoint.x);
+                hitPoint.z = Mathf.Round(hitPoint.z);
+                hitPoint.y = Mathf.Round(hitPoint.y);
+
+                Vector3 direction = cam.transform.forward;
+                /*if (direction.x < 0.5f && direction.x > -0.5f) {
+                    direction.z 
+                }*/
+
+                direction.y = 0;
+                direction.x = Mathf.Round(direction.x);
+                direction.z = direction.x == 1? 0 : 1;
+
+                Debug.Log(direction);
+                
+                framework = Instantiate(this.frameworks[frameworkIndex], hitPoint, Quaternion.LookRotation(direction));
+            }
+
+            return;
+        }
+
+        
+        DoOldStuff();
+    }
+
+    private void DoOldStuff() {
         if (Input.GetKeyDown(KeyCode.I)) {
             Instantiate(GameSettings.Instance.prefab, hand.transform.position, Quaternion.identity);
         }
