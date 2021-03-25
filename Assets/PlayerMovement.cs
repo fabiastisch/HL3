@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -19,6 +20,10 @@ public class PlayerMovement : MonoBehaviour {
     private bool isGrounded;
 
     public float jumpHeight = 3f;
+
+    public int jumps = 2;
+
+    private int currentJumps;
     
     // Update is called once per frame
     void Update() {
@@ -26,6 +31,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (isGrounded && velocity.y < 0) {
             velocity.y = -2f;
+            currentJumps = jumps;
         }
         
         float x = Input.GetAxis("Horizontal");
@@ -36,11 +42,16 @@ public class PlayerMovement : MonoBehaviour {
 
         controller.Move(move * (speed * Time.deltaTime));
 
-        if (Input.GetButtonDown("Jump") && isGrounded) {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        if (Input.GetButtonDown("Jump") && currentJumps > 0) {
+            Jump();
         }
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    void Jump() {
+        currentJumps--;
+        velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 }

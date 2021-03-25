@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Player : MonoBehaviour {
+public class OldPlayer : MonoBehaviour {
     public GameObject[] frameworks;
 
     private int frameworkIndex = 0;
@@ -192,5 +192,13 @@ public class Player : MonoBehaviour {
                 rigidbody.AddForce(transform.forward * throwForce);
             }
         }
+    }
+
+    public GameObject GetObjInHand() {
+        return this.objInHand ? this.gameObject : null;
+    }
+
+    public void SetObjInHand(GameObject obj) {
+        this.objInHand = obj;
     }
 }
