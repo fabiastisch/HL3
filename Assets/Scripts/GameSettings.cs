@@ -11,6 +11,8 @@ public class GameSettings : MonoBehaviour {
 
     private static GameSettings instance;
 
+    public Camera cam;
+
     public static GameSettings Instance {
         get => instance;
     }

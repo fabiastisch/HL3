@@ -19,7 +19,7 @@ public class GravityGun : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        cam = player.cam;
+        cam = GameSettings.Instance.cam;
     }
 
     // Update is called once per frame
