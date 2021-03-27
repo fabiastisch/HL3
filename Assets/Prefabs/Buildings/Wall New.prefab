@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1316987511774267270}
   - component: {fileID: 1316987511774267269}
   - component: {fileID: 1316987511774267268}
-  - component: {fileID: -5900820032733724314}
-  m_Layer: 0
-  m_Name: _Prototype_Wall
+  - component: {fileID: 3118168462236099517}
+  m_Layer: 7
+  m_Name: Wall New
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,7 +390,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f17caf62639ea444992f2c0e9b9d88fb, type: 2}
+  - {fileID: 2100000, guid: 51d815ff023919444b419df2464f17e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -429,12 +429,12 @@ MeshCollider:
   m_GameObject: {fileID: 1316987511774267002}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &-5900820032733724314
+--- !u!114 &3118168462236099517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,6 +443,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1316987511774267002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8cad61c6816ac14c8d4afd4524b1216, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e10f7ad2f841244cb7c1d37dd066793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  life: 10

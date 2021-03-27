@@ -12,6 +12,7 @@ public class GameSettings : MonoBehaviour {
     private static GameSettings instance;
 
     public Camera cam;
+    public GameObject buildings;
 
     public static GameSettings Instance {
         get => instance;

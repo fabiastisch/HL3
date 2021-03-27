@@ -40,7 +40,7 @@ public class BuildingTool : Tool {
                 Transform currentFrameworkTransform = currentFramework.transform;
                 Destroy(currentFramework);
                 currentFramework = null;
-                Instantiate(this.buildings[frameworkIndex], currentFrameworkTransform.position, currentFrameworkTransform.localRotation);
+                Instantiate(this.buildings[frameworkIndex], currentFrameworkTransform.position, currentFrameworkTransform.localRotation).transform.parent = GameSettings.Instance.buildings.transform;
             }
             // replace Framework with building;
             // framework = null;
@@ -66,7 +66,8 @@ public class BuildingTool : Tool {
             direction.x = Mathf.Round(direction.x);
             direction.z = direction.x == 1 || direction.x == -1 ? 0 : Mathf.Round(direction.z);
 
-            currentFramework = Instantiate(this.frameworks[frameworkIndex], hitPoint, Quaternion.LookRotation(direction));
+            currentFramework = Instantiate(this.frameworks[frameworkIndex], hitPoint, Quaternion.LookRotation(-direction));
+            currentFramework.transform.parent = GameSettings.Instance.buildings.transform;
         }
         else {
             if (currentFramework) {
