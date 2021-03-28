@@ -327,3 +327,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 10
+  completeGameObject: {fileID: 3174746956327451914, guid: 0f3287f598f2ef44b9fb28df33ddbdd1, type: 3}
