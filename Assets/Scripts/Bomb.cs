@@ -57,9 +57,9 @@ public class Bomb : MonoBehaviour {
         // Overlap Sphere creates a Sphere with a radius and a pos, and returns every Collider (on a given Layer) that touched that Sphere.
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, interactionLayer);
         foreach (var c in hitColliders) {
-            Life lifeScript = c.GetComponent<Life>();
-            if (lifeScript) {
-                lifeScript.Attack(damage);
+            Health healthScript = c.GetComponent<Health>();
+            if (healthScript) {
+                healthScript.Attack(damage);
             }
 
             Rigidbody r = c.GetComponent<Rigidbody>();
