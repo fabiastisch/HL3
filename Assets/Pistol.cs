@@ -7,7 +7,7 @@ public class Pistol : MonoBehaviour {
 
     private float maxDist = 100f;
 
-    public int damage = 10;
+    public float damage = 10;
     public LayerMask interactionLayer;
     
     // Start is called before the first frame update

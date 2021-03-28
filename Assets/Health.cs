@@ -58,7 +58,7 @@ public class Health : MonoBehaviour {
         return health / maxHealth;
     }
 
-    public void Attack(int damage) {
+    public void Attack(float damage) {
         this.health -= damage;
         if (this.health <= 0) {
             Destroy(completeGameObject);

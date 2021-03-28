@@ -41,7 +41,7 @@ public class Bomb : MonoBehaviour {
     /**
      * Damage of the bomb.
      */
-    public int damage = 100;
+    public float damage = 100;
 
     /**
      * Counter for Explosions.
@@ -59,13 +59,15 @@ public class Bomb : MonoBehaviour {
         foreach (var c in hitColliders) {
             Health healthScript = c.GetComponent<Health>();
             if (healthScript) {
-                healthScript.Attack(damage);
+                float distance = Utils.getDistanceBetweenGameObjects(c.gameObject, gameObject);
+                float relation = distance / explosionRadius; // 0 if bomb is close at obj, 1 is bomb is far away.
+                healthScript.Attack((1 - relation + 0.2f) * damage); // max Damage 1.2 * Damage, min damage 0.2 * Damage
             }
 
             Rigidbody r = c.GetComponent<Rigidbody>();
             if (r) {
-             // Throw away hit objects
-             r.AddExplosionForce(explosionForce, transform.position, explosionRadius, explosionUpModifier);
+                // Throw away hit objects
+                r.AddExplosionForce(explosionForce, transform.position, explosionRadius, explosionUpModifier);
             }
         }
 
