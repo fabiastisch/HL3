@@ -39,6 +39,11 @@ public class Bomb : MonoBehaviour {
     private GameObject exposionEffect;
 
     /**
+     * Damage of the bomb.
+     */
+    public int damage = 100;
+
+    /**
      * Counter for Explosions.
      */
     public static int explosionCount = 0;
@@ -52,13 +57,20 @@ public class Bomb : MonoBehaviour {
         // Overlap Sphere creates a Sphere with a radius and a pos, and returns every Collider (on a given Layer) that touched that Sphere.
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, interactionLayer);
         foreach (var c in hitColliders) {
+            Life lifeScript = c.GetComponent<Life>();
+            if (lifeScript) {
+                lifeScript.Attack(damage);
+            }
+
             Rigidbody r = c.GetComponent<Rigidbody>();
-            // Throw away hit objects
-            r.AddExplosionForce(explosionForce, transform.position, explosionRadius, explosionUpModifier);
+            if (r) {
+             // Throw away hit objects
+             r.AddExplosionForce(explosionForce, transform.position, explosionRadius, explosionUpModifier);
+            }
         }
 
         GetComponent<AudioSource>().Play();
-        
+
         // Add Explosion Particles
         exposionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 

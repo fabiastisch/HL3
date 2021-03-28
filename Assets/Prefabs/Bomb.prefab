@@ -132,8 +132,9 @@ MonoBehaviour:
   explosionUpModifier: 10
   interactionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   explosionPrefab: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 3}
+  damage: 100
 --- !u!82 &2496891893924758753
 AudioSource:
   m_ObjectHideFlags: 0
