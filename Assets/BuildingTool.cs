@@ -8,6 +8,7 @@ public class BuildingTool : Tool {
     private Camera cam;
     public float maxBuildingDistance = 10f;
     public LayerMask buildableLayerMask;
+    public LayerMask buildableWithoutPrefabs;
     public GameObject[] frameworks;
     public GameObject[] buildings;
     private int frameworkIndex = 0;
@@ -87,9 +88,15 @@ public class BuildingTool : Tool {
                 hitPoint.z -= 3;
             }
             Debug.DrawLine(transform.position, hitPoint);
-            currentFramework = Instantiate(this.frameworks[frameworkIndex], hitPoint, Quaternion.LookRotation(direction));
-            
+
+            /*Physics.CheckBox(hitPoint, this.frameworks[frameworkIndex].transform.localScale * 1.5f, Quaternion.LookRotation(direction),
+                buildableWithoutPrefabs);*/
+
+            Quaternion rotation = direction != Vector3.zero ? Quaternion.LookRotation(direction) : Quaternion.identity;
+            currentFramework = Instantiate(this.frameworks[frameworkIndex], hitPoint, rotation);
+    
             currentFramework.transform.parent = GameSettings.Instance.buildings.transform;
+            
         }
         else {
             if (currentFramework) {

@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 670276445276787888}
   - component: {fileID: 7341360285157187849}
   - component: {fileID: 8682491191552958391}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BuildingTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1117360609113860994
 Transform:
   m_ObjectHideFlags: 0
@@ -113,9 +113,14 @@ MonoBehaviour:
   buildableLayerMask:
     serializedVersion: 2
     m_Bits: 384
+  buildableWithoutPrefabs:
+    serializedVersion: 2
+    m_Bits: 128
   frameworks:
-  - {fileID: 4116069033071731011, guid: 54ac501f246efd9459dbbb38eb9867ea, type: 3}
-  - {fileID: 388081401807466402, guid: c3b1491baa5ecb04d83b701a154a0552, type: 3}
+  - {fileID: 7873631791139975032, guid: 6bbe1cb74a539d844a0cc7a38dac6d20, type: 3}
+  - {fileID: 1316987511774267002, guid: 8c408ed0058758f469974065de048694, type: 3}
+  - {fileID: 7475236484112843753, guid: 065c859036d8fba44a6a85a8a7bb3c50, type: 3}
   buildings:
-  - {fileID: 1299280063771494915, guid: b269897a4b373904a942189103cf7b11, type: 3}
-  - {fileID: 388081401807466402, guid: 93b72a7c1ec8a3441af580a3c69ddf59, type: 3}
+  - {fileID: 3174746956327451914, guid: 0f3287f598f2ef44b9fb28df33ddbdd1, type: 3}
+  - {fileID: 4871133700300404271, guid: 2de6ddd3ed3c17f40b129959371543f2, type: 3}
+  - {fileID: 4773226762833874984, guid: 2da9b5415b077f541bde41f425775521, type: 3}

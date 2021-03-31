@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FrameworkSingleton : MonoBehaviour {
+    public bool isColliding = false;
     
     private static FrameworkSingleton instance;
     void Awake() {
@@ -14,4 +16,24 @@ public class FrameworkSingleton : MonoBehaviour {
             instance = this;
         }
     }
+
+    /*private void OnCollisionEnter(Collision other) {
+        Debug.Log("CollEnter");
+    }
+
+    private void OnCollisionExit(Collision other) {
+        Debug.Log("CollExit");
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log("TEnter");
+    }
+
+    private void OnTriggerExit(Collider other) {
+        Debug.Log("TExit");
+    }
+
+    private void OnTriggerStay(Collider other) {
+        Debug.Log("TriggerStay");
+    }*/
 }
