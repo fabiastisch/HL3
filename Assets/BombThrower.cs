@@ -17,7 +17,7 @@ public class BombThrower : MonoBehaviour {
             GameObject ball = Instantiate(bombPrefab, gameObject.transform.position, Quaternion.identity);
             Rigidbody rigidbody = ball.GetComponent<Rigidbody>();
             PlayerMovement playerMovement =  GameSettings.Instance.playerMovement;
-            Debug.Log(playerMovement.GetCurrentPlayerVelocity());
+            // Debug.Log(playerMovement.GetCurrentPlayerVelocity());
             rigidbody.velocity = playerMovement.GetCurrentPlayerVelocity();
             rigidbody.AddForce(GameSettings.Instance.cam.transform.forward * forwardThrowForce );
         }

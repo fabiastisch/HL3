@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 7873631791139974918}
   - component: {fileID: -657350401741135721}
   - component: {fileID: 6617911067577296960}
+  - component: {fileID: 5410776355099505986}
   m_Layer: 7
   m_Name: Floor New
   m_TagString: Untagged
@@ -757,3 +758,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7873631791139975032}
   m_CullTransparentMesh: 1
+--- !u!114 &5410776355099505986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873631791139975032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73aa5f9ce4d160340af59a228e3f15dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildableMask:
+    serializedVersion: 2
+    m_Bits: 128

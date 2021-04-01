@@ -37,9 +37,9 @@ public class BuildingTool : Tool {
 
         if (Input.GetButtonDown("Fire1")) {
             if (currentFramework) {
-                Debug.Log("Instantiate : " + currentFramework.transform.position);
-                Debug.Log("Rotation : " + currentFramework.transform.eulerAngles);
-                Debug.Log("Cam : " + cam.transform.forward);
+                //Debug.Log("Instantiate : " + currentFramework.transform.position);
+                //Debug.Log("Rotation : " + currentFramework.transform.eulerAngles);
+                //Debug.Log("Cam : " + cam.transform.forward);
                 Transform currentFrameworkTransform = currentFramework.transform;
                 Destroy(currentFramework);
                 currentFramework = null;
@@ -89,14 +89,17 @@ public class BuildingTool : Tool {
             }
             Debug.DrawLine(transform.position, hitPoint);
 
-            /*Physics.CheckBox(hitPoint, this.frameworks[frameworkIndex].transform.localScale * 1.5f, Quaternion.LookRotation(direction),
-                buildableWithoutPrefabs);*/
 
             Quaternion rotation = direction != Vector3.zero ? Quaternion.LookRotation(direction) : Quaternion.identity;
-            currentFramework = Instantiate(this.frameworks[frameworkIndex], hitPoint, rotation);
-    
-            currentFramework.transform.parent = GameSettings.Instance.buildings.transform;
             
+            bool checkSphere = Physics.CheckSphere(hitPoint, 1.6f, buildableWithoutPrefabs);
+
+            if (checkSphere) {
+
+                currentFramework = Instantiate(this.frameworks[frameworkIndex], hitPoint, rotation);
+            
+            currentFramework.transform.parent = GameSettings.Instance.buildings.transform;
+            }
         }
         else {
             if (currentFramework) {

@@ -17,15 +17,7 @@ public class FrameworkSingleton : MonoBehaviour {
         }
     }
 
-    /*private void OnCollisionEnter(Collision other) {
-        Debug.Log("CollEnter");
-    }
-
-    private void OnCollisionExit(Collision other) {
-        Debug.Log("CollExit");
-    }
-
-    private void OnTriggerEnter(Collider other) {
+    /*private void OnTriggerEnter(Collider other) {
         Debug.Log("TEnter");
     }
 

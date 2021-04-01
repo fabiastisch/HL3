@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1316987511774267269}
   - component: {fileID: 1316987511774267268}
   - component: {fileID: 3118168462236099517}
+  - component: {fileID: -3813520650006388002}
   m_Layer: 7
   m_Name: Wall New
   m_TagString: Untagged
@@ -452,6 +453,21 @@ MonoBehaviour:
   completeGameObject: {fileID: 4871133700300404271, guid: 2de6ddd3ed3c17f40b129959371543f2, type: 3}
   healthBarUI: {fileID: 6049548528619153501}
   slider: {fileID: 3444468966207919823}
+--- !u!114 &-3813520650006388002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316987511774267002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73aa5f9ce4d160340af59a228e3f15dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildableMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &3349511220681393491
 GameObject:
   m_ObjectHideFlags: 0

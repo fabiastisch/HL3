@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 7475236484112843758}
   - component: {fileID: 7475236484112843759}
   - component: {fileID: 3333635735232218538}
+  - component: {fileID: -5008584901887146614}
   m_Layer: 7
   m_Name: Stair New
   m_TagString: Untagged
@@ -1943,3 +1944,18 @@ MonoBehaviour:
   completeGameObject: {fileID: 4773226762833874984, guid: 2da9b5415b077f541bde41f425775521, type: 3}
   healthBarUI: {fileID: 7466312264219158803}
   slider: {fileID: 2057325939314037041}
+--- !u!114 &-5008584901887146614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7475236484112843753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73aa5f9ce4d160340af59a228e3f15dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildableMask:
+    serializedVersion: 2
+    m_Bits: 128

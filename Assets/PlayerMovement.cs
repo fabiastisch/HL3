@@ -38,8 +38,6 @@ public class PlayerMovement : MonoBehaviour {
         float z = Input.GetAxis("Vertical");
 
         // Vector3 move = new Vector3(x, 0f, z);
-      
-
         if (Input.GetButtonDown("Jump") && currentJumps > 0) {
             Jump();
         }
