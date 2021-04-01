@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public float speed = 12f;
 
-    private Vector3 velocity;
+    public Vector3 velocity;
 
     public float gravity = -9.81f;
 
@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        // Vector3 move = new Vector3(x, 0f, z);
         if (Input.GetButtonDown("Jump") && currentJumps > 0) {
             Jump();
         }
@@ -47,7 +46,7 @@ public class PlayerMovement : MonoBehaviour {
         controller.Move(move * (speed * Time.deltaTime) + velocity * Time.deltaTime);
     }
 
-    void Jump() {
+    public void Jump() {
         currentJumps--;
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
