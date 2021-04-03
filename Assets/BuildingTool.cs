@@ -56,6 +56,9 @@ public class BuildingTool : Tool {
         Debug.DrawLine(ray.origin, ray.GetPoint(maxBuildingDistance));
         RaycastHit raycastHit;
         if (Physics.Raycast(ray, out raycastHit, maxBuildingDistance, buildableLayerMask)) {
+            if (raycastHit.transform.gameObject.CompareTag(this.frameworks[frameworkIndex].tag)) {// If the Object already existed
+                return;
+            }
             // Debug.Log("RayCastHit");
             Vector3 hitPoint = raycastHit.point;
             hitPoint.x = Mathf.Floor(hitPoint.x / 3) * 3;
