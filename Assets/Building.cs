@@ -6,10 +6,11 @@ using UnityEngine;
 public class Building : MonoBehaviour {
     public LayerMask buildableMask;
     private List<GameObject> groundPath = new List<GameObject>();
+    private Vector3 center;
 
     // Start is called before the first frame update
     void Start() {
-        Vector3 center = GetComponent<Renderer>().bounds.center;
+        center = GetComponent<Renderer>().bounds.center;
         Collider[] colliders = Physics.OverlapSphere(center, 2.3f, buildableMask);
         foreach (var collider in colliders) {
             groundPath.Add(collider.gameObject);
@@ -19,14 +20,14 @@ public class Building : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Vector3 center = GetComponent<Renderer>().bounds.center;
+        /*Vector3 center = GetComponent<Renderer>().bounds.center;
         Debug.DrawLine(GameSettings.Instance.cam.transform.position, center);
         
 
         if (groundPath.Count == 0) {
             Debug.Log("Destroy");
             Destroy(gameObject);
-        }
+        }*/
 
         /*if (colliders.Length <= 1) {
             Destroy(gameObject);
@@ -34,13 +35,24 @@ public class Building : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(GetComponent<Renderer>().bounds.center, 2.3f);
+        /*Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(GetComponent<Renderer>().bounds.center, 2.3f);*/
     }
 
     private void OnDestroy() {
         Debug.Log("OnDestory");
-        Vector3 center = GetComponent<Renderer>().bounds.center;
+        // Say every neighbour that this object will be destoryed.
+        Debug.Log("Center: " + center);
+        Collider[] colliders = Physics.OverlapSphere(center, 2.3f, buildableMask);
+        Debug.Log("Found Neighbours: " +colliders.Length);
+        foreach (var neighbour in colliders) {
+            Building building = neighbour.gameObject.GetComponent<Building>();
+            if (building) { // only if the neighbourObj have an Building script.
+                building.CheckGroundPath(gameObject);
+            }
+        }
+        
+        /*Vector3 center = GetComponent<Renderer>().bounds.center;
         Collider[] colliders = Physics.OverlapSphere(center, 2.3f, buildableMask);
         Debug.Log(colliders.Length);
         bool grounded = false;
@@ -63,7 +75,14 @@ public class Building : MonoBehaviour {
                 }
                 // Destroy(collider.gameObject);
             }  
-        }
+        }*/
+    }
+
+    public void CheckGroundPath(GameObject o) {
+        Debug.Log("CheckGroundPath");
+        Vector3 pos = o.gameObject.GetComponent<Building>().GetCenter();
+        Debug.Log("Center: " + pos + "\n on " + GetComponent<Renderer>().bounds.center );
+        Debug.DrawLine(pos, GetComponent<Renderer>().bounds.center, Color.cyan, float.MaxValue);
     }
 
     public bool checkGrounded(GameObject obj) {
@@ -95,5 +114,9 @@ public class Building : MonoBehaviour {
             Destroy(gameObject);
         }
         Destroy(gameObject);
+    }
+
+    public Vector3 GetCenter() {
+        return center;
     }
 }
