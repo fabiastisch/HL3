@@ -57,6 +57,7 @@ public class BuildingTool : Tool {
         RaycastHit raycastHit;
         if (Physics.Raycast(ray, out raycastHit, maxBuildingDistance, buildableLayerMask)) {
             if (raycastHit.transform.gameObject.CompareTag(this.frameworks[frameworkIndex].tag)) {// If the Object already existed
+                Debug.Log("Exist" + raycastHit.transform.gameObject.tag);
                 return;
             }
             // Debug.Log("RayCastHit");
