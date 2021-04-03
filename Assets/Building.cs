@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Building : MonoBehaviour {
     public LayerMask buildableMask;
     private List<GameObject> groundPath = new List<GameObject>();
     private Vector3 center;
+    private static int notGroundedCounter = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -42,13 +44,13 @@ public class Building : MonoBehaviour {
     private void OnDestroy() {
         Debug.Log("OnDestory");
         // Say every neighbour that this object will be destoryed.
-        Debug.Log("Center: " + center);
+        // Debug.Log("Center: " + center);
         Collider[] colliders = Physics.OverlapSphere(center, 2.3f, buildableMask);
-        Debug.Log("Found Neighbours: " +colliders.Length);
+        Debug.Log("Initial Found Neighbours: " +colliders.Length);
         foreach (var neighbour in colliders) {
             Building building = neighbour.gameObject.GetComponent<Building>();
             if (building) { // only if the neighbourObj have an Building script.
-                building.CheckGroundPath(gameObject);
+                building.CheckGroundPathFromDestroyedObj(gameObject);
             }
         }
         
@@ -78,11 +80,85 @@ public class Building : MonoBehaviour {
         }*/
     }
 
-    public void CheckGroundPath(GameObject o) {
-        Debug.Log("CheckGroundPath");
+    public bool CheckGroundPath(GameObject o, int index) {
+        if (index >5) {
+            return false;
+        }
+      //  Debug.Log("CheckGroundPath");
         Vector3 pos = o.gameObject.GetComponent<Building>().GetCenter();
-        Debug.Log("Center: " + pos + "\n on " + GetComponent<Renderer>().bounds.center );
+       // Debug.Log("Center: " + pos + "\n on " + GetComponent<Renderer>().bounds.center );
+       Debug.DrawLine(pos, GetComponent<Renderer>().bounds.center, Color.cyan, float.MaxValue);
+       Collider[] colliders = Physics.OverlapSphere(center, 2.3f, buildableMask);
+       Debug.Log("Found Neighbours: " +colliders.Length);
+       bool grounded = false;
+       foreach (var neighbour in colliders) {
+           Building building = neighbour.gameObject.GetComponent<Building>();
+           if (neighbour.gameObject == o) {
+               continue;
+           }
+           if (building) { // only if the neighbourObj have an Building script.
+               bool temp = building.CheckGroundPath(gameObject, index +1);
+               grounded = temp ? temp : grounded;
+           }
+           else {
+               grounded = true;
+           }
+       }
+
+       if (grounded) {
+           return grounded;
+       }
+       else {
+           // Invoke(nameof(destory),10f);
+           Debug.Log("NotGrounded Objs: " + ++notGroundedCounter);
+           return grounded;
+       }
+    }
+
+    private void destory() {
+        Destroy(gameObject);
+    }
+
+    public void destroyAfterSeconds(float time) {
+        Invoke(nameof(destory), time);
+    }
+    
+    /**
+     * Check if this GameObject must be destoyed, cause GameObject o got destoryed.
+     * 
+     */
+    public void CheckGroundPathFromDestroyedObj(GameObject o) {
+       // Debug.Log("CheckGroundPath");
+        Vector3 pos = o.gameObject.GetComponent<Building>().GetCenter();
+        // Debug.Log("Center: " + pos + "\n on " + GetComponent<Renderer>().bounds.center );
         Debug.DrawLine(pos, GetComponent<Renderer>().bounds.center, Color.cyan, float.MaxValue);
+        
+        Collider[] colliders = Physics.OverlapSphere(center, 2.3f, buildableMask);
+        Debug.Log("Found Neighbours: " +colliders.Length);
+        bool grounded = false;
+        foreach (var neighbour in colliders) {
+            Building building = neighbour.gameObject.GetComponent<Building>();
+            if (neighbour.gameObject == o) {
+                continue;
+            }
+            if (building) { // only if the neighbourObj have an Building script.
+                bool temp = building.CheckGroundPath(gameObject, 0);
+                if (!temp) {
+                    building.destroyAfterSeconds(0.5f);
+                }
+                grounded = temp ? temp : grounded;
+            }
+            else {
+                grounded = true;
+            }
+        }
+
+        if (grounded) {
+            Debug.Log("Grounded Obj found");
+        }
+        else {
+            destroyAfterSeconds(1f);
+        }
     }
 
     public bool checkGrounded(GameObject obj) {
