@@ -45,7 +45,7 @@ public class Building : MonoBehaviour {
             mesh.RecalculateNormals();
         mesh.RecalculateBounds();
         // Gizmos.DrawSphere(GetComponent<Renderer>().bounds.center, shpereRadius);
-        Gizmos.DrawMesh(mesh, center);
+        // Gizmos.DrawMesh(mesh, center);
     }
 
     /**
