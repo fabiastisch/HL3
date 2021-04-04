@@ -386,6 +386,14 @@ PrefabInstance:
       propertyPath: completeGameObject
       value: 
       objectReference: {fileID: 4773226762833874984}
+    - target: {fileID: 7415584809789993211, guid: fb1805fd61fb0234fb36453d5be0293d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415584809789993211, guid: fb1805fd61fb0234fb36453d5be0293d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7475236484112843752, guid: fb1805fd61fb0234fb36453d5be0293d, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -468,6 +468,7 @@ MonoBehaviour:
   buildableMask:
     serializedVersion: 2
     m_Bits: 128
+  collisionBox: {fileID: 0}
 --- !u!1 &3349511220681393491
 GameObject:
   m_ObjectHideFlags: 0
