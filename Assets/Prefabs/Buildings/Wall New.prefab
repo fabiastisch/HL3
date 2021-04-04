@@ -469,6 +469,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   collisionBox: {fileID: 0}
+  defaultRotation: {x: 90, y: 0, z: 0}
   ScaleX: 2
   ScaleY: 2
   ScaleZ: 2

@@ -14,7 +14,6 @@ public class BuildingTool : Tool {
     private int frameworkIndex = 0;
     private GameObject currentFramework;
 
-
     private void Start() {
         cam = GameSettings.Instance.cam;
         Debug.Log("Start");
@@ -30,7 +29,7 @@ public class BuildingTool : Tool {
                 this.frameworks.Length > 0 ? this.frameworks.Length - 1 : 0;
         }
         else if (scroll < 0f) {
-           // Debug.Log("scrollDown");
+            // Debug.Log("scrollDown");
             // scroll down
             frameworkIndex = frameworkIndex + 1 < this.frameworks.Length ? frameworkIndex + 1 : 0;
         }
@@ -43,8 +42,10 @@ public class BuildingTool : Tool {
                 Transform currentFrameworkTransform = currentFramework.transform;
                 Destroy(currentFramework);
                 currentFramework = null;
-                Instantiate(this.buildings[frameworkIndex], currentFrameworkTransform.position,
-                    currentFrameworkTransform.localRotation).transform.parent = GameSettings.Instance.buildings.transform;
+                GameObject o = Instantiate(this.buildings[frameworkIndex], currentFrameworkTransform.position,
+                    currentFrameworkTransform.localRotation);
+                o.transform.parent = GameSettings.Instance.buildings.transform;
+                o.GetComponent<BuildingWrapper>().Building.SetColliderRotation(currentFrameworkTransform.localRotation);
             }
 
             // replace Framework with building;
@@ -56,15 +57,20 @@ public class BuildingTool : Tool {
         Debug.DrawLine(ray.origin, ray.GetPoint(maxBuildingDistance));
         RaycastHit raycastHit;
         if (Physics.Raycast(ray, out raycastHit, maxBuildingDistance, buildableLayerMask)) {
-            if (raycastHit.transform.gameObject.CompareTag(this.frameworks[frameworkIndex].tag)) {// If the Object already existed
+            if (raycastHit.transform.gameObject.CompareTag(this.frameworks[frameworkIndex].tag)) {
+                // If the Object already existed
                 Debug.Log("Exist" + raycastHit.transform.gameObject.tag);
                 return;
             }
+
             // Debug.Log("RayCastHit");
             Vector3 hitPoint = raycastHit.point;
+
+            ExtDebug.DrawBox(hitPoint, Vector3.one, Quaternion.identity, Color.yellow);
+
             hitPoint.x = Mathf.Floor(hitPoint.x / 3) * 3;
             hitPoint.z = Mathf.Ceil(hitPoint.z / 3) * 3;
-            hitPoint.y = (Mathf.Round(hitPoint.y / 3)) * 3;
+            hitPoint.y = Mathf.Round(hitPoint.y / 3) * 3;
 
             Vector3 direction = cam.transform.forward;
             /*if (direction.x < 0.5f && direction.x > -0.5f) {
@@ -73,13 +79,13 @@ public class BuildingTool : Tool {
 
             direction.y = 0;
             direction.x = Mathf.Round(direction.x);
-            direction.z =  Mathf.Abs(direction.x) == 1 ? 0 : Mathf.Round(direction.z);
+            direction.z = Mathf.Abs(direction.x) == 1 ? 0 : Mathf.Round(direction.z);
             // Debug.Log(direction);
-            
+
             /**
              * Fix Rotation issues
              */
-            if (direction.x == -1f) {
+            /*if (direction.x == -1f) {
                 hitPoint.z -= 3;
             }
 
@@ -90,19 +96,29 @@ public class BuildingTool : Tool {
             if (direction.z == -1) {
                 hitPoint.x += 3;
                 hitPoint.z -= 3;
-            }
-            Debug.DrawLine(transform.position, hitPoint);
+            }*/
+            Debug.DrawLine(transform.position, hitPoint, Color.blue);
 
 
             Quaternion rotation = direction != Vector3.zero ? Quaternion.LookRotation(direction) : Quaternion.identity;
-            
-            bool checkSphere = Physics.CheckSphere(hitPoint, 1.6f, buildableWithoutPrefabs);
 
-            if (checkSphere) {
+            // bool checkSphere = Physics.CheckSphere(hitPoint, 1.6f, buildableWithoutPrefabs);
+            BuildingWrapper buildingWrapper = this.buildings[frameworkIndex].GetComponent<BuildingWrapper>();
+            Vector3 defaultRotation = buildingWrapper.Building.defaultRotation;
 
-                currentFramework = Instantiate(this.frameworks[frameworkIndex], hitPoint, rotation);
-            
-            currentFramework.transform.parent = GameSettings.Instance.buildings.transform;
+            ExtDebug.DrawBox(hitPoint + buildingWrapper.offset, Vector3.one, Quaternion.identity, Color.cyan);
+
+            ExtDebug.DrawBox(hitPoint, new Vector3(1.6f, 0.6f, 2.2f),
+                Quaternion.Euler(Utils.rotateRotation(defaultRotation, rotation.eulerAngles)), Color.red);
+            bool checkBox = Physics.CheckBox(hitPoint, new Vector3(1.6f, 0.6f, 2.2f),
+                Quaternion.Euler(Utils.rotateRotation(defaultRotation, rotation.eulerAngles)));
+            if (checkBox) {
+                currentFramework = Instantiate(this.frameworks[frameworkIndex], hitPoint + buildingWrapper.offset, rotation);
+
+                currentFramework.transform.parent = GameSettings.Instance.buildings.transform;
+            }
+            else {
+                Debug.Log("CheckSphereFailed");
             }
         }
         else {

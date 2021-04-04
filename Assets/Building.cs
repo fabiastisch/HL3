@@ -9,9 +9,9 @@ public class Building : MonoBehaviour {
     public GameObject collisionBox;
     private Vector3 center;
     private static List<Building> currentlyChecked = new List<Building>();
-
-    private float shpereRadius = 2f;
+    public Vector3 defaultRotation = Vector3.zero;
     private Vector3 halfExtents = new Vector3(1.5f,1f,1.5f);
+    private Quaternion colliderRotation;
     
     
     public float ScaleX = 2.0f;
@@ -19,6 +19,10 @@ public class Building : MonoBehaviour {
     public float ScaleZ = 2.0f;
     public bool RecalculateNormals = false;
     private Vector3[] _baseVertices;
+
+    public void SetColliderRotation(Quaternion rotation) {
+        colliderRotation = rotation;
+    }
     // Start is called before the first frame update
     void Start() {
         center = GetComponent<Renderer>().bounds.center;
@@ -27,8 +31,8 @@ public class Building : MonoBehaviour {
     private void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
         // Mesh mesh = GetComponent<MeshCollider>().sharedMesh;
-        Mesh mesh = Utils.CopyMesh(GetComponent<MeshFilter>().mesh);
-        Debug.Log(mesh);
+        Mesh mesh = Utils.CopyMesh(GetComponent<MeshFilter>().sharedMesh);
+        // Debug.Log(mesh);
         if (_baseVertices == null)
             _baseVertices = mesh.vertices;
         var vertices = new Vector3[_baseVertices.Length];
@@ -106,9 +110,9 @@ public class Building : MonoBehaviour {
     }
 
     private Collider[] GetCollider() {
-        Physics.OverlapBox(center, halfExtents, Quaternion.identity);
-        
-        return Physics.OverlapSphere(center, shpereRadius, buildableMask);
+        ExtDebug.DrawBox(center,new Vector3(1.6f,0.6f,2.2f),Quaternion.Euler(Utils.rotateRotation(defaultRotation, colliderRotation.eulerAngles)),Color.red, 10f);
+        return Physics.OverlapBox(center, new Vector3(1.6f,0.6f,2.2f), Quaternion.Euler(Utils.rotateRotation(defaultRotation, colliderRotation.eulerAngles)));
+        // return Physics.OverlapSphere(center, shpereRadius, buildableMask);
     }
 
     private bool FindGround(GameObject o) {

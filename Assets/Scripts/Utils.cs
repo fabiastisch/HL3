@@ -15,4 +15,8 @@ public class Utils {
         newMesh.tangents = mesh.tangents;
         return newMesh;
     }
+
+    public static Vector3 rotateRotation(Vector3 one, Vector3 two) {
+        return new Vector3(one.x + two.x, one.y + two.y, one.z + two.z);
+    }
 }
