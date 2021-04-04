@@ -12,22 +12,27 @@ public class Building : MonoBehaviour {
 
     private float shpereRadius = 2f;
     private Vector3 halfExtents = new Vector3(1.5f,1f,1.5f);
-    
-    
-    public float ScaleX = 2.0f;
-    public float ScaleY = 2.0f;
-    public float ScaleZ = 2.0f;
+
+    public Vector3 rotation = Vector3.zero;
+    private Quaternion colliderRotation;
+
+    public float ScaleX = 1.0f;
+    public float ScaleY = 1.0f;
+    public float ScaleZ = 1.0f;
     public bool RecalculateNormals = false;
     private Vector3[] _baseVertices;
     // Start is called before the first frame update
     void Start() {
         center = GetComponent<Renderer>().bounds.center;
+        
     }
-
+    public void SetColliderRotation(Quaternion rotation) {
+        colliderRotation = rotation;
+    }
     private void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
         // Mesh mesh = GetComponent<MeshCollider>().sharedMesh;
-        Mesh mesh = Utils.CopyMesh(GetComponent<MeshFilter>().mesh);
+        Mesh mesh = Utils.CopyMesh(GetComponent<MeshFilter>().sharedMesh);
         Debug.Log(mesh);
         if (_baseVertices == null)
             _baseVertices = mesh.vertices;
@@ -45,7 +50,7 @@ public class Building : MonoBehaviour {
             mesh.RecalculateNormals();
         mesh.RecalculateBounds();
         // Gizmos.DrawSphere(GetComponent<Renderer>().bounds.center, shpereRadius);
-        Gizmos.DrawMesh(mesh, center);
+        // Gizmos.DrawMesh(mesh, center);
     }
 
     /**
@@ -106,9 +111,12 @@ public class Building : MonoBehaviour {
     }
 
     private Collider[] GetCollider() {
-        Physics.OverlapBox(center, halfExtents, Quaternion.identity);
+        ExtDebug.DrawBox(center,new Vector3(1.6f,0.6f,2.2f),Quaternion.Euler(Utils.rotateRotation(rotation, colliderRotation.eulerAngles)),Color.red, 10f);
+        return Physics.OverlapBox(center, new Vector3(1.6f,0.6f,2.2f), Quaternion.Euler(Utils.rotateRotation(rotation, colliderRotation.eulerAngles)));
         
-        return Physics.OverlapSphere(center, shpereRadius, buildableMask);
+        /*Physics.OverlapBox(center, halfExtents, Quaternion.identity);
+        
+        return Physics.OverlapSphere(center, shpereRadius, buildableMask);*/
     }
 
     private bool FindGround(GameObject o) {

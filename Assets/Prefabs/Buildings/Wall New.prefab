@@ -469,6 +469,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   collisionBox: {fileID: 0}
+  rotation: {x: 90, y: 0, z: 0}
+  ScaleX: 1
+  ScaleY: 1
+  ScaleZ: 1
+  RecalculateNormals: 0
 --- !u!1 &3349511220681393491
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,8 +43,10 @@ public class BuildingTool : Tool {
                 Transform currentFrameworkTransform = currentFramework.transform;
                 Destroy(currentFramework);
                 currentFramework = null;
-                Instantiate(this.buildings[frameworkIndex], currentFrameworkTransform.position,
-                    currentFrameworkTransform.localRotation).transform.parent = GameSettings.Instance.buildings.transform;
+                GameObject o = Instantiate(this.buildings[frameworkIndex], currentFrameworkTransform.position,
+                    currentFrameworkTransform.localRotation);
+                    o.transform.parent = GameSettings.Instance.buildings.transform;
+                    o.GetComponent<BuildingWrapper>().Building.SetColliderRotation(currentFrameworkTransform.localRotation);
             }
 
             // replace Framework with building;
@@ -55,6 +57,7 @@ public class BuildingTool : Tool {
         Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         Debug.DrawLine(ray.origin, ray.GetPoint(maxBuildingDistance));
         RaycastHit raycastHit;
+        
         if (Physics.Raycast(ray, out raycastHit, maxBuildingDistance, buildableLayerMask)) {
             if (raycastHit.transform.gameObject.CompareTag(this.frameworks[frameworkIndex].tag)) {// If the Object already existed
                 Debug.Log("Exist" + raycastHit.transform.gameObject.tag);
