@@ -10,7 +10,6 @@ public class Building : MonoBehaviour {
     private Vector3 center;
     private static List<Building> currentlyChecked = new List<Building>();
 
-    private float shpereRadius = 2f;
     private Vector3 halfExtents = new Vector3(1.5f,1f,1.5f);
 
     public Vector3 rotation = Vector3.zero;
