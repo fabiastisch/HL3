@@ -25,9 +25,11 @@ public class PlayerMovement : MonoBehaviour {
 
     private int currentJumps;
 
+    public float sprintSpeedMuliplier = 1.4f;
+
     public float dashTime = 0.2f;
     public float dashCoolDown = 1f;
-    public float dashMultiplierSpeed = 5f;
+    public float dashSpeedMultiplier = 10f;
     private bool isDashOnCooldown = false;
 
     // Update is called once per frame
@@ -56,15 +58,27 @@ public class PlayerMovement : MonoBehaviour {
 
 
         velocity.y += gravity * Time.deltaTime; // Movement Y Direction (Jump & Gravity)
-        controller.Move(move * (speed * Time.deltaTime) + velocity * Time.deltaTime);
+        if (this.IsSprinting()) {
+            Debug.Log("IS Sprinting");
+            controller.Move(move * (speed * sprintSpeedMuliplier * Time.deltaTime) + velocity * Time.deltaTime);
+        }
+        else {
+            Debug.Log("IS NOT Sprinting");
+            controller.Move(move * (speed * Time.deltaTime) + velocity * Time.deltaTime);
+        }
+
     }
 
     private IEnumerator DashCoroutine() {
         float startTime = Time.time; // need to remember this to know how long to dash
         while (Time.time < startTime + dashTime) {
-            controller.Move(transform.forward * (speed * dashMultiplierSpeed * Time.deltaTime));
+            controller.Move(transform.forward * (sprintSpeedMuliplier * speed * dashSpeedMultiplier * Time.deltaTime));
             yield return null; // this will make Unity stop here and continue next frame
         }
+    }
+
+    private bool IsSprinting() {
+        return Input.GetKey(KeyCode.LeftShift);
     }
 
     private void Dash() {
