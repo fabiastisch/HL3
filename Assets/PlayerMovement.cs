@@ -27,8 +27,8 @@ public class PlayerMovement : MonoBehaviour {
 
     public float dashTime = 0.2f;
     public float dashCoolDown = 1f;
-    public float dashDistance = 20f;
-    private bool isDashing = false;
+    public float dashMultiplierSpeed = 5f;
+    private bool isDashOnCooldown = false;
 
     // Update is called once per frame
     void Update() {
@@ -47,10 +47,9 @@ public class PlayerMovement : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.V)) {
             Debug.Log("Dash");
-            StartCoroutine(DashCoroutine());
-            /*if (!isDashing) {
+            if (!isDashOnCooldown) {
                 Dash();
-            }*/
+            }
         }
 
         Vector3 move = transform.right * x + transform.forward * z;
@@ -63,18 +62,19 @@ public class PlayerMovement : MonoBehaviour {
     private IEnumerator DashCoroutine() {
         float startTime = Time.time; // need to remember this to know how long to dash
         while (Time.time < startTime + dashTime) {
-            controller.Move(transform.forward * dashDistance * Time.deltaTime);
+            controller.Move(transform.forward * (speed * dashMultiplierSpeed * Time.deltaTime));
             yield return null; // this will make Unity stop here and continue next frame
         }
     }
 
     private void Dash() {
-        isDashing = true;
+        isDashOnCooldown = true;
         Invoke(nameof(ResetDash), dashCoolDown);
+        StartCoroutine(DashCoroutine());
     }
 
     private void ResetDash() {
-        isDashing = false;
+        isDashOnCooldown = false;
     }
 
     public void Jump() {
