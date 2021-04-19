@@ -79,6 +79,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Dash() {
         isDashOnCooldown = true;
+        GameSettings.Instance.cooldownManager.StartDashing(dashCoolDown);
         Invoke(nameof(ResetDash), dashCoolDown);
         StartCoroutine(DashCoroutine());
     }
@@ -94,5 +95,9 @@ public class PlayerMovement : MonoBehaviour {
 
     public Vector3 GetCurrentPlayerVelocity() {
         return controller.velocity;
+    }
+
+    public int GetCurrentJumps() {
+        return currentJumps;
     }
 }

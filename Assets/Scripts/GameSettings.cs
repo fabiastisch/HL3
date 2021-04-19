@@ -8,6 +8,7 @@ using UnityEngine;
 public class GameSettings : MonoBehaviour {
     public string message;
     public GameObject prefab;
+    public CooldownManager cooldownManager;
 
     private static GameSettings instance;
 
