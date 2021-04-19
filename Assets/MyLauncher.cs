@@ -17,15 +17,23 @@ public class MyLauncher : MonoBehaviourPunCallbacks {
 
     public override void OnConnectedToMaster() {
         PhotonNetwork.JoinRandomRoom();
+        // PhotonNetwork.JoinLobby();
     }
     
     public override void OnJoinRandomFailed(short returnCode, string message) {
-        PhotonNetwork.CreateRoom(null, new RoomOptions {MaxPlayers = 4});
+        PhotonNetwork.CreateRoom("Tester Room", new RoomOptions {MaxPlayers = 4});
     }
 
     public override void OnJoinedRoom() {
         Debug.Log("Room Joined!");
-        // PhotonNetwork.LoadLevel("MyGameScene");
+        PhotonNetwork.LoadLevel("MyGameScene");
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList) {
+        Debug.Log("Room Update. Number of rooms: " + roomList.Count );
+        foreach (RoomInfo ri in roomList) {
+            Debug.Log(ri.Name);
+        }
     }
 
     // Start is called before the first frame update
