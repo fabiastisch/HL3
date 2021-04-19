@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour {
+public class Health : MonoBehaviour, IAttackable {
     public float health = 10;
     public float maxHealth = 10;
 

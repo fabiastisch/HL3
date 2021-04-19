@@ -9,6 +9,7 @@ public class GameSettings : MonoBehaviour {
     public string message;
     public GameObject prefab;
     public CooldownManager cooldownManager;
+    public PlayerInfoHandler playerInfoHandler;
 
     private static GameSettings instance;
 

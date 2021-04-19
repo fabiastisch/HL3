@@ -57,8 +57,8 @@ public class Bomb : MonoBehaviour {
         // Overlap Sphere creates a Sphere with a radius and a pos, and returns every Collider (on a given Layer) that touched that Sphere.
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, interactionLayer);
         foreach (var c in hitColliders) {
-            Health healthScript = c.GetComponent<Health>();
-            if (healthScript) {
+            IAttackable healthScript = c.GetComponent(typeof(IAttackable)) as IAttackable;
+            if (healthScript != null) {
                 float distance = Utils.getDistanceBetweenGameObjects(c.gameObject, gameObject);
                 float relation = distance / explosionRadius; // 0 if bomb is close at obj, 1 is bomb is far away.
                 healthScript.Attack((1 - relation + 0.2f) * damage); // max Damage 1.2 * Damage, min damage 0.2 * Damage
