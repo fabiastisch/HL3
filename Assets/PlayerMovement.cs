@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour {
     public CharacterController controller;

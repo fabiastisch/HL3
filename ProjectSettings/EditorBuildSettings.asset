@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Networking.unity
+    path: Assets/Scenes/NetworkingPreGame.unity
     guid: dac7865925e86b243bd0ab26dfc2827a
   - enabled: 1
     path: Assets/Scenes/MyGameScene.unity
