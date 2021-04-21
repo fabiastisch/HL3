@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class MyNetworkPlayer : MonoBehaviourPun {
-    public Camera camera;
+    public Camera cam;
     
     // Start is called before the first frame update
     void Start() {
@@ -13,8 +13,8 @@ public class MyNetworkPlayer : MonoBehaviourPun {
             
         }
         else {
-            camera.enabled = false;
-            camera.gameObject.GetComponent<AudioListener>().enabled = false;
+            cam.enabled = false;
+            cam.gameObject.GetComponent<AudioListener>().enabled = false;
             gameObject.GetComponent<FirstPersonController>().enabled = false;
         }
     }

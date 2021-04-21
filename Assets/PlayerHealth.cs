@@ -8,11 +8,11 @@ public class PlayerHealth : Health, IAttackable {
     }
 
     // Update is called once per frame
-    void Update() {
+    new void Update() {
         base.Update();
     }
 
-    public void Attack(float damage) {
+    public new void Attack(float damage) {
         health -= damage;
         if (health <= 0) {
             Debug.Log("Player Died");
