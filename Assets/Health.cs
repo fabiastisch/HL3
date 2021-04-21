@@ -32,7 +32,7 @@ public class Health : MonoBehaviour, IAttackable {
     }
 
     // Update is called once per frame
-    void Update() {
+    public void Update() {
         if (slider) {
             slider.value = GetPercentageHealth();
         }
@@ -54,7 +54,7 @@ public class Health : MonoBehaviour, IAttackable {
         }
     }
 
-    float GetPercentageHealth() {
+    public float GetPercentageHealth() {
         return health / maxHealth;
     }
 
