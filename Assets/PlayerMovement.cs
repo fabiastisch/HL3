@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -27,6 +28,11 @@ public class PlayerMovement : MonoBehaviour {
     public float dashCoolDown = 1f;
     public float dashSpeedMultiplier = 10f;
     private bool isDashOnCooldown = false;
+
+    private Vector3 spawnPosition;
+    private void Start() {
+        spawnPosition = transform.position;
+    }
 
     // Update is called once per frame
     void Update() {
@@ -99,5 +105,12 @@ public class PlayerMovement : MonoBehaviour {
 
     public int GetCurrentJumps() {
         return currentJumps;
+    }
+
+    public void Die() {
+        Debug.Log("Die");
+        Debug.Log(transform.position);
+        transform.position = spawnPosition;
+        Debug.Log(transform.position);
     }
 }

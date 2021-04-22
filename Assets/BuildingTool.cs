@@ -14,7 +14,7 @@ public class BuildingTool : Tool {
     private void Start() {
         cam = GameSettings.Instance.cam;
         Debug.Log("Start");
-        Physics.IgnoreLayerCollision(0, 8);
+        Physics.IgnoreLayerCollision(9, 8);
     }
 
     protected override void OnUpdate() {
