@@ -59,7 +59,6 @@ public class Bomb : MonoBehaviour {
         foreach (var c in hitColliders) {
             IAttackable healthScript = c.GetComponent(typeof(IAttackable)) as IAttackable;
             if (healthScript != null) {
-                Debug.Log(healthScript);
                 float distance = Utils.getDistanceBetweenGameObjects(c.gameObject, gameObject);
                 float relation = distance / explosionRadius; // 0 if bomb is close at obj, 1 is bomb is far away.
                 healthScript.Attack((1 - relation + 0.2f) * damage); // max Damage 1.2 * Damage, min damage 0.2 * Damage

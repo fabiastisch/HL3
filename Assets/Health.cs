@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Health : MonoBehaviour, IAttackable {
+[RequireComponent(typeof(PhotonView))]
+public class Health : MonoBehaviourPun, IAttackable, IPunObservable {
     public float health = 10;
     public float maxHealth = 10;
 
@@ -21,6 +23,10 @@ public class Health : MonoBehaviour, IAttackable {
         if (!completeGameObject) {
             completeGameObject = gameObject;
         }
+
+        PhotonView photonView = gameObject.GetComponent<PhotonView>();
+
+        photonView.ObservedComponents.Add(this);
     }
 
     // Start is called before the first frame update
@@ -70,6 +76,17 @@ public class Health : MonoBehaviour, IAttackable {
         if (slider) {
             slider.transform.LookAt(slider.transform.position + GameSettings.Instance.cam.transform.rotation * Vector3.forward,
                 GameSettings.Instance.cam.transform.rotation * Vector3.up);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        Debug.Log("Sync...");
+        if (stream.IsWriting) {
+            stream.SendNext(health);
+        }
+        else {
+            health = (float) stream.ReceiveNext();
+            Debug.Log("Got Health: " + health);
         }
     }
 }
