@@ -80,7 +80,6 @@ public class Health : MonoBehaviourPun, IAttackable, IPunObservable {
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
-        Debug.Log("Sync...");
         if (stream.IsWriting) {
             stream.SendNext(health);
         }

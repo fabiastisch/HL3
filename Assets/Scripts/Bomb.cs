@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour {
+public class Bomb : MonoBehaviourPun {
     /**
      * Bomb explosion delay in sec.
      */
@@ -56,15 +57,15 @@ public class Bomb : MonoBehaviour {
     void Explode() {
         // Overlap Sphere creates a Sphere with a radius and a pos, and returns every Collider (on a given Layer) that touched that Sphere.
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, interactionLayer);
-        foreach (var c in hitColliders) {
-            IAttackable healthScript = c.GetComponent(typeof(IAttackable)) as IAttackable;
+        foreach (var hittedObj in hitColliders) {
+            IAttackable healthScript = hittedObj.GetComponent(typeof(IAttackable)) as IAttackable;
             if (healthScript != null) {
-                float distance = Utils.getDistanceBetweenGameObjects(c.gameObject, gameObject);
+                float distance = Utils.getDistanceBetweenGameObjects(hittedObj.gameObject, gameObject);
                 float relation = distance / explosionRadius; // 0 if bomb is close at obj, 1 is bomb is far away.
                 healthScript.Attack((1 - relation + 0.2f) * damage); // max Damage 1.2 * Damage, min damage 0.2 * Damage
             }
 
-            Rigidbody r = c.GetComponent<Rigidbody>();
+            Rigidbody r = hittedObj.GetComponent<Rigidbody>();
             if (r) {
                 // Throw away hit objects
                 r.AddExplosionForce(explosionForce, transform.position, explosionRadius, explosionUpModifier);
@@ -85,7 +86,9 @@ public class Bomb : MonoBehaviour {
     }
 
     void Kill() {
-        Destroy(exposionEffect);
-        Destroy(gameObject);
+        if (photonView.IsMine) {
+            Destroy(exposionEffect);
+            Destroy(gameObject);   
+        }
     }
 }

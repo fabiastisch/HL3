@@ -61,11 +61,9 @@ public class PlayerMovement : MonoBehaviour {
 
         velocity.y += gravity * Time.deltaTime; // Movement Y Direction (Jump & Gravity)
         if (this.IsSprinting()) {
-            Debug.Log("IS Sprinting");
             controller.Move(move * (speed * sprintSpeedMuliplier * Time.deltaTime) + velocity * Time.deltaTime);
         }
         else {
-            Debug.Log("IS NOT Sprinting");
             controller.Move(move * (speed * Time.deltaTime) + velocity * Time.deltaTime);
         }
 
@@ -109,8 +107,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public void Die() {
         Debug.Log("Die");
-        Debug.Log(transform.position);
         transform.position = spawnPosition;
-        Debug.Log(transform.position);
     }
 }
