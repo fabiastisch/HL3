@@ -13,8 +13,7 @@ public class CooldownManager : MonoBehaviour {
     
     // Start is called before the first frame update
     void Start() {
-        cooldownText.text = dash + " Ready";
-        cooldownText.text += " \n" + jumpsAvaiable + GameSettings.Instance.playerMovement.jumps;
+        // cooldownText.text += dash + " Ready" + " \n" + jumpsAvaiable + GameSettings.Instance.playerMovement.jumps;
     }
 
     // Update is called once per frame
@@ -28,7 +27,9 @@ public class CooldownManager : MonoBehaviour {
             cooldownText.text = dash + " Ready";
         }
 
-        cooldownText.text += " \n" + jumpsAvaiable + GameSettings.Instance.playerMovement.GetCurrentJumps();
+        if (GameSettings.Instance.playerMovement) {
+            cooldownText.text += " \n" + jumpsAvaiable + GameSettings.Instance.playerMovement.GetCurrentJumps();
+        }
 
     }
 

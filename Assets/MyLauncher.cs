@@ -26,7 +26,7 @@ public class MyLauncher : MonoBehaviourPunCallbacks {
 
     public override void OnJoinedRoom() {
         Debug.Log("Room Joined!");
-        PhotonNetwork.LoadLevel("MyGameScene");
+        PhotonNetwork.LoadLevel("World");
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
