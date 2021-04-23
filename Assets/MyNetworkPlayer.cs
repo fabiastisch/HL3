@@ -27,9 +27,10 @@ public class MyNetworkPlayer : MonoBehaviourPun {
             else {
                 cam.enabled = false;
                 cam.gameObject.GetComponent<AudioListener>().enabled = false;
+                cam.gameObject.GetComponent<MouseLook>().enabled = false;
                 gameObject.GetComponent<PlayerMovement>().enabled = false;
                 GetComponent<PlayerUtils>().toolsSwitchingScript.enabled = false;
-                
+
             }
         }
         
