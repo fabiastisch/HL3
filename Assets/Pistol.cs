@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pistol : MonoBehaviour {
+public class Pistol : Tool {
     private Camera cam;
 
     private float maxDist = 100f;
@@ -17,6 +17,9 @@ public class Pistol : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (!photonView.IsMine) {
+            return;
+        }
         if (Input.GetButtonDown("Fire1")) {
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             Debug.DrawLine(ray.origin, ray.GetPoint(maxDist));

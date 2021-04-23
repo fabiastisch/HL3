@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class BuildingTool : Tool {
@@ -17,7 +18,10 @@ public class BuildingTool : Tool {
         Physics.IgnoreLayerCollision(9, 8);
     }
 
-    protected override void OnUpdate() {
+    protected void Update() {
+        if (!photonView.IsMine) {
+            return;
+        }
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0f) {
             // Debug.Log("scrollUp");
@@ -39,10 +43,19 @@ public class BuildingTool : Tool {
                 Transform currentFrameworkTransform = currentFramework.transform;
                 Destroy(currentFramework);
                 currentFramework = null;
-                GameObject o = Instantiate(this.buildings[frameworkIndex], currentFrameworkTransform.position,
-                    currentFrameworkTransform.localRotation);
+                if (PhotonNetwork.IsConnected) {
+                    GameObject o = PhotonNetwork.Instantiate(this.buildings[frameworkIndex].name, currentFrameworkTransform.position,
+                        currentFrameworkTransform.localRotation);
                     o.transform.parent = GameSettings.Instance.buildings.transform;
                     o.GetComponent<BuildingWrapper>().Building.SetColliderRotation(currentFrameworkTransform.localRotation);
+                }
+                else {
+                    GameObject o = Instantiate(this.buildings[frameworkIndex], currentFrameworkTransform.position,
+                        currentFrameworkTransform.localRotation);
+                    o.transform.parent = GameSettings.Instance.buildings.transform;
+                    o.GetComponent<BuildingWrapper>().Building.SetColliderRotation(currentFrameworkTransform.localRotation);
+                }
+                
             }
 
             // replace Framework with building;
