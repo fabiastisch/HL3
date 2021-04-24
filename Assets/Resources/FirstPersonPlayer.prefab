@@ -240,7 +240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1511075689982017470
 Transform:
   m_ObjectHideFlags: 0
@@ -8111,6 +8111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4806655261218147271}
   - component: {fileID: 4578680145902439986}
+  - component: {fileID: 8572281960404815958}
   m_Layer: 9
   m_Name: Tools
   m_TagString: Untagged
@@ -8150,6 +8151,28 @@ MonoBehaviour:
   selectedTool: 0
   prevSelectedTool: 0
   buildingTool: {fileID: 4373371715729575810}
+--- !u!114 &8572281960404815958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336756784627680281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7238636406193351120
 GameObject:
   m_ObjectHideFlags: 0

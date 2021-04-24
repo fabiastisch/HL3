@@ -85,7 +85,6 @@ public class Health : MonoBehaviourPun, IAttackable, IPunObservable {
         }
         else {
             health = (float) stream.ReceiveNext();
-            Debug.Log("Got Health: " + health);
         }
     }
 }

@@ -1,17 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class ToolsSwitching : MonoBehaviour {
+public class ToolsSwitching : MonoBehaviourPunCallbacks {
     public int selectedTool = 0;
     public int prevSelectedTool = 0;
     public GameObject buildingTool;
     private bool isBuilding = false;
 
+    private void Awake() {
+    }
+
     // Start is called before the first frame update
     void Start() {
-        UpdateSelectedTool();
+        UpdateFromMyView();
     }
 
     private void UpdateSelectedTool() {
@@ -28,15 +34,26 @@ public class ToolsSwitching : MonoBehaviour {
         }
     }
 
+    private void UpdateFromMyView() {
+        Hashtable hashtable = new Hashtable();
+        hashtable.Add("itemIndex", this.selectedTool);
+        hashtable.Add("isBuilding", this.isBuilding);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
+        UpdateSelectedTool();
+    }
+
     // Update is called once per frame
     void Update() {
+        if (!photonView.IsMine) {
+            return;
+        }
         int prevSelected = selectedTool;
         if (Input.GetKeyDown(KeyCode.Q)) {
             isBuilding = !isBuilding;
             if (isBuilding) {
                 // Set Building obj active, everything else inactive.
                 buildingTool.SetActive(true);
-                UpdateSelectedTool();
+                UpdateFromMyView();
             }
             else {
                 buildingTool.SetActive(false);
@@ -67,7 +84,20 @@ public class ToolsSwitching : MonoBehaviour {
 
 
         if (prevSelected != selectedTool) {
+            UpdateFromMyView();
+        }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps) {
+        if (!photonView.IsMine && targetPlayer.Equals(photonView.Owner)) {
+            int itemIndex = (int) changedProps["itemIndex"];
+            Debug.Log("On PlayerProp Update: " + itemIndex);
+            selectedTool = itemIndex;
+            isBuilding = (bool) changedProps["isBuilding"];
+            buildingTool.SetActive(isBuilding);
             UpdateSelectedTool();
+
+            
         }
     }
 }
