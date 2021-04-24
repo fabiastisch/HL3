@@ -43,6 +43,7 @@ public class BulletScript : MonoBehaviourPun {
         
         if (!photonView.IsMine) {
             GameObject hittedObj = other.gameObject;
+            Debug.Log("On My View it hitted: " + hittedObj);
             if (hittedObj.Equals(Owner)) {
                 Debug.Log("Equals Owner...");
                 return;
@@ -54,6 +55,7 @@ public class BulletScript : MonoBehaviourPun {
             }
         }
         else {
+            Debug.Log("On NOT My View it hitted: " + other.gameObject);
             PhotonNetwork.Destroy(gameObject);
 
         }

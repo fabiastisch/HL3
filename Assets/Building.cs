@@ -61,11 +61,11 @@ public class Building : MonoBehaviour {
      * This Method will be called, when this GameObject get Destroyed. 
      */
     private void OnDestroy() {
-        Debug.Log("OnDestory");
+        
         // Say every neighbour that this object will be destoryed.
         // Debug.Log("Center: " + center);
         Collider[] colliders = GetCollider();
-        Debug.Log("Initial Found Neighbours: " + colliders.Length);
+      
         foreach (var neighbour in colliders) {
             // check for every neighbour if is grounded
             Building building = neighbour.gameObject.GetComponent<Building>();

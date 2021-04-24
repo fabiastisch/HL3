@@ -1596,6 +1596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1326868619973333172, guid: f55f57ef44d4f7541a0434a49b357e9a, type: 3}
   bulletPoint: {fileID: 4524393892075074652}
+  maxDist: 1000
   bulletForce: 12000
   damage: 25
   interactionLayer:

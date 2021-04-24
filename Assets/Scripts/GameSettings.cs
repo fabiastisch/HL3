@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 /**
@@ -30,4 +31,5 @@ public class GameSettings : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+    
 }
