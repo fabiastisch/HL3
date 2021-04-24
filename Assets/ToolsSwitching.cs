@@ -12,8 +12,6 @@ public class ToolsSwitching : MonoBehaviourPunCallbacks {
     public GameObject buildingTool;
     private bool isBuilding = false;
 
-    private void Awake() {
-    }
 
     // Start is called before the first frame update
     void Start() {
@@ -39,6 +37,8 @@ public class ToolsSwitching : MonoBehaviourPunCallbacks {
         hashtable.Add("itemIndex", this.selectedTool);
         hashtable.Add("isBuilding", this.isBuilding);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hashtable);
+        GameSettings.Instance.handMenuHandler.SetIsBuilding(isBuilding);
+        GameSettings.Instance.handMenuHandler.SetCurrentSelectetItem(selectedTool);
         UpdateSelectedTool();
     }
 

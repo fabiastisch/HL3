@@ -7,10 +7,12 @@ using UnityEngine;
  * Example of an Singleton in Unity
  */
 public class GameSettings : MonoBehaviour {
-    public string message;
     public GameObject prefab;
     public CooldownManager cooldownManager;
     public PlayerInfoHandler playerInfoHandler;
+    
+    public UIHandMenuHandler handMenuHandler;
+
 
     private static GameSettings instance;
 
