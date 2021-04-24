@@ -10,7 +10,7 @@ public class MyNetworkingManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         if (PhotonNetwork.InRoom) {
-            PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 5, 0), Quaternion.identity, 0);
+            PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(-42, 5, -25), Quaternion.identity, 0);
         }
         else {
              //        PhotonNetwork.LoadLevel("World");
