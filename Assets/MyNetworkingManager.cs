@@ -18,7 +18,7 @@ public class MyNetworkingManager : MonoBehaviour {
             // ceneManager.LoadScene("NetworkingPreGame");
         }
 
-        Debug.Log("PhotonNetwork in Room?: "+PhotonNetwork.InRoom);
+       //  Debug.Log("PhotonNetwork in Room?: "+PhotonNetwork.InRoom);
     }
 
     // Update is called once per frame

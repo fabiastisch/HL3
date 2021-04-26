@@ -14,7 +14,7 @@ public class BuildingTool : Tool {
 
     private void Start() {
         cam = GameSettings.Instance.cam;
-        Debug.Log("Start");
+       // Debug.Log("Start");
         Physics.IgnoreLayerCollision(9, 8);
     }
 
@@ -69,7 +69,7 @@ public class BuildingTool : Tool {
         
         if (Physics.Raycast(ray, out raycastHit, maxBuildingDistance, buildableLayerMask)) {
             if (raycastHit.transform.gameObject.CompareTag(this.frameworks[frameworkIndex].tag)) {// If the Object already existed
-                Debug.Log("Exist" + raycastHit.transform.gameObject.tag);
+               // Debug.Log("Exist" + raycastHit.transform.gameObject.tag);
                 return;
             }
             // Debug.Log("RayCastHit");
@@ -107,8 +107,42 @@ public class BuildingTool : Tool {
 
 
             Quaternion rotation = direction != Vector3.zero ? Quaternion.LookRotation(direction) : Quaternion.identity;
-            
-            bool checkSphere = Physics.CheckSphere(hitPoint, 1.6f, buildableWithoutPrefabs);
+
+            Vector3 centerHitPoint = hitPoint;
+            if (direction.x == 1) {
+                centerHitPoint.x -= 1.5f;
+                centerHitPoint.z -= 1.5f;
+            }
+            else if (direction.x == -1) {
+                centerHitPoint.x += 1.5f;
+                centerHitPoint.z += 1.5f;
+            }else if (direction.z == 1) {
+                centerHitPoint.x += 1.5f;
+                centerHitPoint.z -= 1.5f;
+            }else if (direction.z == -1) {
+                centerHitPoint.x -= 1.5f;
+                centerHitPoint.z += 1.5f;
+            }
+            else {
+                centerHitPoint.x += 1.5f;
+                centerHitPoint.z -= 1.5f;
+            }
+
+            if (this.frameworks[frameworkIndex].tag.Equals("Stair") || this.frameworks[frameworkIndex].tag.Equals("Wall")) {
+                Debug.Log("Stair or Wall");
+               // centerHitPoint += direction * 3;
+                centerHitPoint.y += 1.5f;
+                // centerHitPoint.x += rotation.x;
+                // centerHitPoint.y += rotation.y;
+                // centerHitPoint.z += rotation.z;
+                if (!(direction.x == 0 && direction.z == 0)) {
+                    hitPoint -= direction * 3;  
+                }
+            }
+            Debug.Log(direction);
+            Debug.DrawLine(transform.position, centerHitPoint, Color.blue);
+
+            bool checkSphere = Physics.CheckBox(centerHitPoint, new Vector3(1.51f,1.51f,1.51f), Quaternion.identity, buildableWithoutPrefabs);
 
             if (checkSphere) {
 

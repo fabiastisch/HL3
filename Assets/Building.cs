@@ -23,7 +23,7 @@ public class Building : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         center = GetComponent<Renderer>().bounds.center;
-        
+        CheckGroundPathFromDestroyedObj(gameObject, 0);
     }
     public void SetColliderRotation(Quaternion rotation) {
         colliderRotation = rotation;
@@ -79,7 +79,7 @@ public class Building : MonoBehaviour {
     /**
      * Remove this obj if its not Grounded.
      */
-    private void CheckGroundPathFromDestroyedObj(GameObject o) {
+    private void CheckGroundPathFromDestroyedObj(GameObject o, float destroyTime = 0.7f) {
         Vector3 pos = o.gameObject.GetComponent<Building>().GetCenter();
         // Debug.Log("Center: " + pos + "\n on " + GetComponent<Renderer>().bounds.center );
         Debug.DrawLine(pos, GetComponent<Renderer>().bounds.center, Color.yellow, float.MaxValue);
@@ -109,7 +109,7 @@ public class Building : MonoBehaviour {
         
         currentlyChecked.Clear();
         if (!grounded) {
-            destroyAfterSeconds(0.7f);
+            destroyAfterSeconds(destroyTime);
         }
         
     }
