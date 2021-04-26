@@ -13,6 +13,9 @@ Standard Assets - https://assetstore.unity.com/packages/essentials/asset-packs/s
 
 Unity Probuilder
 
+## Utility
+
+Sprinten mit 'Shift', Dash mit 'v' und Jump mit 'Space'.
 
 ## Building
 
