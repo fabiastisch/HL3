@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravityGun : MonoBehaviour {
+public class GravityGun : Tool {
     public Player player;
 
     public float maxDist = 100f;
@@ -24,6 +24,9 @@ public class GravityGun : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (!photonView.IsMine) {
+            return;
+        }
         // Grab and hold an GameObj, with which the player can interact || Gravitygun
         if (Input.GetButton("Fire1")) {
             if (!objInHand) {

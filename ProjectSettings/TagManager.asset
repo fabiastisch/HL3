@@ -18,8 +18,8 @@ TagManager:
   - Interaction
   - Building
   - BuildingHelper
-  - 
-  - 
+  - Player
+  - DontRender
   - 
   - 
   - 

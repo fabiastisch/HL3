@@ -10,7 +10,6 @@ public class Building : MonoBehaviour {
     private Vector3 center;
     private static List<Building> currentlyChecked = new List<Building>();
 
-    private float shpereRadius = 2f;
     private Vector3 halfExtents = new Vector3(1.5f,1f,1.5f);
 
     public Vector3 rotation = Vector3.zero;
@@ -24,13 +23,18 @@ public class Building : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         center = GetComponent<Renderer>().bounds.center;
-        
+        CheckGroundPathFromDestroyedObj(gameObject, 0);
     }
     public void SetColliderRotation(Quaternion rotation) {
         colliderRotation = rotation;
     }
+
+    private void Update() {
+        // ExtDebug.DrawBox(center,new Vector3(1.6f,0.6f,2.2f),Quaternion.Euler(Utils.rotateRotation(rotation, colliderRotation.eulerAngles)),Color.red);
+    }
+
     private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
+        /*Gizmos.color = Color.yellow;
         // Mesh mesh = GetComponent<MeshCollider>().sharedMesh;
         Mesh mesh = Utils.CopyMesh(GetComponent<MeshFilter>().sharedMesh);
         Debug.Log(mesh);
@@ -48,7 +52,7 @@ public class Building : MonoBehaviour {
         mesh.vertices = vertices;
         if (RecalculateNormals)
             mesh.RecalculateNormals();
-        mesh.RecalculateBounds();
+        mesh.RecalculateBounds();*/
         // Gizmos.DrawSphere(GetComponent<Renderer>().bounds.center, shpereRadius);
         // Gizmos.DrawMesh(mesh, center);
     }
@@ -57,11 +61,11 @@ public class Building : MonoBehaviour {
      * This Method will be called, when this GameObject get Destroyed. 
      */
     private void OnDestroy() {
-        Debug.Log("OnDestory");
+        
         // Say every neighbour that this object will be destoryed.
         // Debug.Log("Center: " + center);
         Collider[] colliders = GetCollider();
-        Debug.Log("Initial Found Neighbours: " + colliders.Length);
+      
         foreach (var neighbour in colliders) {
             // check for every neighbour if is grounded
             Building building = neighbour.gameObject.GetComponent<Building>();
@@ -75,7 +79,7 @@ public class Building : MonoBehaviour {
     /**
      * Remove this obj if its not Grounded.
      */
-    private void CheckGroundPathFromDestroyedObj(GameObject o) {
+    private void CheckGroundPathFromDestroyedObj(GameObject o, float destroyTime = 0.7f) {
         Vector3 pos = o.gameObject.GetComponent<Building>().GetCenter();
         // Debug.Log("Center: " + pos + "\n on " + GetComponent<Renderer>().bounds.center );
         Debug.DrawLine(pos, GetComponent<Renderer>().bounds.center, Color.yellow, float.MaxValue);
@@ -105,18 +109,15 @@ public class Building : MonoBehaviour {
         
         currentlyChecked.Clear();
         if (!grounded) {
-            destroyAfterSeconds(0.7f);
+            destroyAfterSeconds(destroyTime);
         }
         
     }
 
     private Collider[] GetCollider() {
         ExtDebug.DrawBox(center,new Vector3(1.6f,0.6f,2.2f),Quaternion.Euler(Utils.rotateRotation(rotation, colliderRotation.eulerAngles)),Color.red, 10f);
-        return Physics.OverlapBox(center, new Vector3(1.6f,0.6f,2.2f), Quaternion.Euler(Utils.rotateRotation(rotation, colliderRotation.eulerAngles)));
+        return Physics.OverlapBox(center, new Vector3(1.6f,0.6f,2.2f), Quaternion.Euler(Utils.rotateRotation(rotation, colliderRotation.eulerAngles)), buildableMask);
         
-        /*Physics.OverlapBox(center, halfExtents, Quaternion.identity);
-        
-        return Physics.OverlapSphere(center, shpereRadius, buildableMask);*/
     }
 
     private bool FindGround(GameObject o) {
